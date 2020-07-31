@@ -1,0 +1,167 @@
+<!-- The content below is only a placeholder and can be replaced.
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+</div>
+<h2>Here are some links to help you start: </h2>
+<ul>
+  <li>
+    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
+  </li>
+  <li>
+    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
+  </li>
+  <li>
+    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
+  </li>
+</ul>
+
+<router-outlet></router-outlet> -->
+
+<h1>{{title}} </h1>
+<br>
+<div>
+  <div>Title through uppercase pipe::::::::::::::::::::::: {{title | uppercase | lowercase}}</div>
+  
+  <h1>{{birthdate}} </h1>
+  <!-- pipe with configuration argument => "February 25, 1970" -->
+  <div>Birthdate: {{birthdate | date:'longDate'}}</div>
+</div>
+<!-- <app-heroes></app-heroes> -->
+<nav>
+    <!-- 
+      well, in html for space we use &nbsp, 
+      but if you use css then you can do this with 
+      the help of padding, margin, etc.
+      <button style="margin:5px;">Button 1</button> 
+    -->
+    <a routerLink="/dashboard" style="margin:5px;">Dashboard</a>
+    <a routerLink="/heroes">Heroes</a>
+</nav>
+<router-outlet></router-outlet>
+<app-messages></app-messages>
+<div>
+  <!-- Default format: output 'Jun 15, 2015'-->
+ <p>Today is {{today | date}}</p>
+
+ <!-- fullDate format: output 'Monday, June 15, 2015'-->
+ <p>The date is {{today | date:'fullDate'}}</p>
+ 
+  <!-- shortTime format: output '9:43 AM'-->
+  <p>The time is {{today | date:'shortTime'}}</p>
+</div>
+<br><br>
+
+<!-- ================== Event Binding ==================== -->
+<h1 id="event-binding">Event Binding</h1>
+
+<div class="group">
+  <h3>Target event</h3>
+  <button (click)="onSave($event)">Save</button>
+
+  <button on-click="onSave($event)">on-click Save</button>
+
+  <h4>myClick is an event on the custom ClickDirective:</h4>
+  <button (myClick)="$event" clickable>click with myClick</button>
+  {{clickMessage}}
+
+</div>
+
+<div class="group">
+  <h3>$event and event handling statements</h3>
+  <h4>Result: {{currentItem.name}}</h4>
+
+  <input [value]="currentItem.name"
+         (input)="currentItem.name=$event.target.value" >
+  without NgModel
+</div>
+
+<div class="group">
+  <h3>Binding to a nested component</h3>
+  <h4>Custom events with EventEmitter</h4>
+  <app-item-detail (deleteRequest)="deleteItem($event)" [item]="currentItem"></app-item-detail>
+
+
+  <h4>Click to see event target class:</h4>
+<div class="parent-div" (click)="onClickMe($event)" clickable>Click me (parent)
+  <div class="child-div">Click me too! (child) </div>
+</div>
+
+<h3>Saves only once:</h3>
+<div (click)="onSave()" clickable>
+  <button (click)="onSave($event)">Save, no propagation</button>
+</div>
+
+<h3>Saves twice:</h3>
+<div (click)="onSave()" clickable>
+  <button (click)="onSave()">Save with propagation</button>
+</div>
+</div>
+<!-- ================== Sizer  ==================== -->
+<br><div>
+  <!-- <app-sizer [(size)]="fontSizePx"></app-sizer>
+  <div [style.font-size.px]="fontSizePx">Resizable Text</div> -->
+  <app-sizer [(size)]="fontSizePx" (sizeChange)="fontSizePx=$event"></app-sizer>
+
+</div>
+<!-- NgClass  Example -->
+<div>
+  <!-- toggle the "special" class on/off with a property -->
+  <!-- <div [class.special]="isSpecial">The class binding is special</div> -->
+  <div [ngClass]="currentClasses">This div is initially saveable, unchanged, and special</div>
+</div>
+<br>
+<div>
+  <div [ngStyle]="currentStyles">
+    This div is initially italic, normal weight, and extra large (24px).
+  </div>
+</div>
+<br>
+<div>
+  <!-- <div [ngSwitch]="currentHero.emotion">
+    <app-happy-hero    *ngSwitchCase="'happy'"    [hero]="currentHero"></app-happy-hero>
+    <app-sad-hero      *ngSwitchCase="'sad'"      [hero]="currentHero"></app-sad-hero>
+    <app-confused-hero *ngSwitchCase="'confused'" [hero]="currentHero"></app-confused-hero>
+    <app-unknown-hero  *ngSwitchDefault           [hero]="currentHero"></app-unknown-hero>
+  </div> -->
+
+</div>
+<br>
+<div>
+  <input #phone placeholder="phone number" style="margin:5px;">
+  <!-- lots of other elements -->
+  <!-- phone refers to the input element; pass its `value` to an event handler -->
+  <button (click)="callPhone(phone.value)">Call</button>
+</div>
+
+<br>
+<div>
+    <!-- <form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name
+          <input class="form-control" name="name" required [(ngModel)]="hero.name">
+        </label>
+      </div>
+      <button type="submit" [disabled]="!heroForm.form.valid">Submit</button>
+    </form>
+    <div [hidden]="!heroForm.form.valid">
+      {{submitMessage}}
+    </div> -->
+
+</div>
+<!-- Date and age calculator -->
+<br>
+<div>
+  <div class="row">
+    <div class="input-field col m2">
+        <input type="date" [(ngModel)]="birthdate" id="txtdate">
+    </div>
+    <div class="input-field col m4">
+        <input type="number" [(ngModel)]="age" id="age">
+    </div>
+    <button (click)="CalculateAge()">Calculate Age</button>
+</div>
+
+</div>
